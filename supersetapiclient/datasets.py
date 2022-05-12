@@ -12,6 +12,7 @@ class Dataset(Object):
     EXPORTABLE = True
 
     id: int
+    database: int
     table_name: str
     schema: str = ""
     columns: list = field(default_factory=list)
