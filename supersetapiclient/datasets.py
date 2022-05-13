@@ -17,6 +17,7 @@ class Dataset(Object):
     schema: str = ""
     columns: list = field(default_factory=list)
     description: str = ""
+    main_dttm_col: str = ""
 
 
 class Datasets(ObjectFactories):
