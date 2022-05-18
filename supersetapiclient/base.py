@@ -351,6 +351,11 @@ class ObjectFactories:
             data = yaml.load(data, Loader=yaml.FullLoader)
             with open(path, "w", encoding="utf-8") as f:
                 yaml.dump(data, f, default_flow_style=False)
+        elif content_type.startswith("application/zip"):
+            data = response.content
+            if path:
+                with open(path, "wb") as f:
+                    f.write(data)
         else:
             data = response.json()
             with open(path, 'w', encoding='utf-8') as f:
@@ -370,6 +375,19 @@ class ObjectFactories:
             return True
         else:
             return False
+
+    def import_bundle(self, bundle_path) -> int:
+        """Import a bundle file on remote."""
+        url = self.import_url
+
+        file = {'bundle': (bundle_path, open(bundle_path, 'rb'))}
+
+        response = self.client.post(url, files=file)
+        response.raise_for_status()
+
+        # If import is successful,
+        # the following is returned: {'message': 'OK'}
+        return response.json()
 
     def import_file(self, file_path) -> int:
         """Import a file on remote."""

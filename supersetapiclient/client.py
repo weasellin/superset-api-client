@@ -9,6 +9,7 @@ from supersetapiclient.dashboards import Dashboards
 from supersetapiclient.charts import Charts
 from supersetapiclient.datasets import Datasets
 from supersetapiclient.databases import Databases
+from supersetapiclient.assets import Assets
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,9 @@ class SupersetClient:
         self.charts = Charts(self)
         self.datasets = Datasets(self)
         self.databases = Databases(self)
+
+        # Related Assets
+        self.assets = Assets(self)
 
     def join_urls(self, *args) -> str:
         """Join multiple urls together.
